@@ -1,8 +1,8 @@
-import { BlurView } from 'expo-blur';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { ChevronRightIcon, GreenDotIcon } from '@/components/icons';
 import { BlurIntensity, Palette, Type } from '@/constants/design-tokens';
+import { GlassBlur } from '@/components/ui/glass-blur';
 
 /** "DP Conversations" stacked card preview (Figma 254:27536). */
 export function ConversationsBlock() {
@@ -25,12 +25,7 @@ export function ConversationsBlock() {
 
         {/* Front card */}
         <View style={styles.frontCard}>
-          <BlurView
-            intensity={BlurIntensity.b10}
-            tint="dark"
-            style={StyleSheet.absoluteFill}
-            blurMethod={Platform.OS === 'android' ? 'dimezisBlurView' : undefined}
-          />
+          <GlassBlur intensity={BlurIntensity.b10} />
           <View style={[StyleSheet.absoluteFill, styles.frontBg]} />
           <GreenDotIcon size={6} color={Palette.secondary30} />
           <Text style={styles.frontText} numberOfLines={1}>

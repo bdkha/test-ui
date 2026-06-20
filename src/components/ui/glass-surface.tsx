@@ -1,8 +1,8 @@
-import { BlurView } from 'expo-blur';
 import type { PropsWithChildren } from 'react';
-import { Platform, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { Palette } from '@/constants/design-tokens';
+import { GlassBlur } from '@/components/ui/glass-blur';
 import { SkiaGradientBorder } from '@/components/ui/skia-gradient-border';
 
 type Props = PropsWithChildren<{
@@ -27,7 +27,7 @@ type Props = PropsWithChildren<{
 export function GlassSurface({
   radius,
   intensity,
-  tint = 'dark',
+  tint,
   bgColor = Palette.white5,
   borderStroke = 1,
   borderColors,
@@ -36,13 +36,7 @@ export function GlassSurface({
 }: Props) {
   return (
     <View style={[{ borderRadius: radius, overflow: 'hidden' }, style]}>
-      <BlurView
-        intensity={intensity}
-        tint={tint}
-        style={StyleSheet.absoluteFill}
-        // dimezisBlurView gives a real backdrop blur on Android (default is none).
-        blurMethod={Platform.OS === 'android' ? 'dimezisBlurView' : undefined}
-      />
+      <GlassBlur intensity={intensity} tint={tint} />
       <View style={[StyleSheet.absoluteFill, { backgroundColor: bgColor }]} />
       {children}
       {borderStroke > 0 && (

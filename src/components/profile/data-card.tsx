@@ -1,8 +1,8 @@
-import { BlurView } from 'expo-blur';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { ArrowUpRightIcon } from '@/components/icons';
 import { BlurIntensity, Palette, Type } from '@/constants/design-tokens';
+import { GlassBlur } from '@/components/ui/glass-blur';
 
 export type DataCardProps = {
   value: string;
@@ -17,12 +17,7 @@ export type DataCardProps = {
 export function DataCard({ value, label, caption, percent }: DataCardProps) {
   return (
     <View style={styles.card}>
-      <BlurView
-        intensity={BlurIntensity.b15}
-        tint="dark"
-        style={StyleSheet.absoluteFill}
-        blurMethod={Platform.OS === 'android' ? 'dimezisBlurView' : undefined}
-      />
+      <GlassBlur intensity={BlurIntensity.b15} />
       <View style={[StyleSheet.absoluteFill, styles.bg]} />
       <Text style={styles.value}>{value}</Text>
       <View style={styles.textBlock}>

@@ -55,4 +55,4 @@ export const Type = {
  * Figma BACKGROUND_BLUR radius -> expo-blur intensity (0-100).
  * Not a linear map; these are tuned starting points (see plan P4).
  */
-export const BlurIntensity = { b10: 18, b15: 26, b20: 32, b30: 48, b66: 80 } as const;
+export const BlurIntensity = { b10: 35, b15: 45, b20: 55, b30: 70, b66: 95 } as const;

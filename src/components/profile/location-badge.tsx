@@ -1,9 +1,9 @@
-import { BlurView } from 'expo-blur';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { NavigationIcon, SettingsSmallIcon } from '@/components/icons';
 import { AnimatedDots } from '@/components/profile/animated-dots';
 import { BlurIntensity, Palette, Type } from '@/constants/design-tokens';
+import { GlassBlur } from '@/components/ui/glass-blur';
 
 const LOCATION = 'Cardiff-by-the-Sea, Encinitas, CA';
 
@@ -12,12 +12,7 @@ export function LocationBadge() {
   return (
     <View style={styles.row}>
       <View style={styles.pill}>
-        <BlurView
-          intensity={BlurIntensity.b10}
-          tint="dark"
-          style={StyleSheet.absoluteFill}
-          blurMethod={Platform.OS === 'android' ? 'dimezisBlurView' : undefined}
-        />
+        <GlassBlur intensity={BlurIntensity.b10} />
         <View style={[StyleSheet.absoluteFill, styles.pillBg]} />
         <AnimatedDots size={16} />
         <NavigationIcon size={16} color={Palette.white100} />
@@ -26,12 +21,7 @@ export function LocationBadge() {
         </Text>
       </View>
       <Pressable style={styles.settingsBtn} accessibilityRole="button" accessibilityLabel="Location settings">
-        <BlurView
-          intensity={BlurIntensity.b10}
-          tint="dark"
-          style={StyleSheet.absoluteFill}
-          blurMethod={Platform.OS === 'android' ? 'dimezisBlurView' : undefined}
-        />
+        <GlassBlur intensity={BlurIntensity.b10} />
         <View style={[StyleSheet.absoluteFill, styles.pillBg]} />
         <SettingsSmallIcon size={12} color={Palette.white100} />
       </Pressable>

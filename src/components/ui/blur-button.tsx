@@ -1,7 +1,5 @@
-import { BlurView } from 'expo-blur';
 import type { ReactNode } from 'react';
 import {
-  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -11,6 +9,7 @@ import {
 } from 'react-native';
 
 import { BlurIntensity, Palette, Type } from '@/constants/design-tokens';
+import { GlassBlur } from '@/components/ui/glass-blur';
 import { SkiaGradientBorder } from '@/components/ui/skia-gradient-border';
 
 type BaseProps = {
@@ -82,12 +81,7 @@ export function BlurButton(props: Props) {
         outline ? styles.outline : null,
         style,
       ]}>
-      <BlurView
-        intensity={intensity}
-        tint="dark"
-        style={[StyleSheet.absoluteFill, { borderRadius: radius }]}
-        blurMethod={Platform.OS === 'android' ? 'dimezisBlurView' : undefined}
-      />
+      <GlassBlur intensity={intensity} style={{ borderRadius: radius }} />
       <View
         style={[StyleSheet.absoluteFill, { backgroundColor: Palette.white5, borderRadius: radius }]}
       />
