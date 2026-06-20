@@ -14,7 +14,7 @@ export function GlassBlur({ tint = 'systemUltraThinMaterialDark', style, ...rest
   return (
     <BlurView
       tint={tint}
-      experimentalBlurMethod="dimezisBlurView" // Android-only; iOS bỏ qua
+      blurMethod='dimezisBlurView'
       style={[StyleSheet.absoluteFill, style]}
       {...rest}
     />

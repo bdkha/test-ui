@@ -1,9 +1,11 @@
-import type { ReactNode } from 'react';
+import { BlurMask, Canvas, RoundedRect } from '@shopify/react-native-skia';
+import { useState, type ReactNode } from 'react';
 import {
   Pressable,
   StyleSheet,
   Text,
   View,
+  type LayoutChangeEvent,
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
@@ -40,12 +42,50 @@ type IconOnlyProps = BaseProps & {
 
 type Props = WithTextProps | IconOnlyProps;
 
+/**
+ * The two soft white "BG Element" glows (Figma 754:60269 / 754:60588): white20
+ * pills with a ~16px Gaussian blur, clipped to the button. Drawn with Skia so
+ * they feather into a glow instead of reading as hard white pills.
+ */
 function GlowBlobs() {
+  const [size, setSize] = useState({ w: 0, h: 0 });
+
+  const onLayout = (e: LayoutChangeEvent) => {
+    const { width, height } = e.nativeEvent.layout;
+    if (width !== size.w || height !== size.h) {
+      setSize({ w: width, h: height });
+    }
+  };
+
   return (
-    <>
-      <View style={styles.glowTop} />
-      <View style={styles.glowBottom} />
-    </>
+    <View style={StyleSheet.absoluteFill} pointerEvents="none" onLayout={onLayout}>
+      {size.w > 0 && size.h > 0 && (
+        <Canvas style={{ width: size.w, height: size.h }}>
+          {/* top glow */}
+          <RoundedRect
+            x={14.5}
+            y={-15.5}
+            width={size.w - 29}
+            height={26}
+            r={13}
+            color={Palette.white20}
+            opacity={0.6}>
+            <BlurMask blur={12} style="normal" />
+          </RoundedRect>
+          {/* bottom glow */}
+          <RoundedRect
+            x={23.5}
+            y={size.h - 16.5}
+            width={size.w - 47}
+            height={32}
+            r={16}
+            color={Palette.white20}
+            opacity={0.6}>
+            <BlurMask blur={12} style="normal" />
+          </RoundedRect>
+        </Canvas>
+      )}
+    </View>
   );
 }
 
@@ -125,25 +165,5 @@ const styles = StyleSheet.create({
     ...Type.btn14_regular,
     color: Palette.white80,
     textAlign: 'center',
-  },
-  glowTop: {
-    position: 'absolute',
-    top: -15.5,
-    left: 14.5,
-    right: 14.5,
-    height: 26,
-    borderRadius: 200,
-    backgroundColor: Palette.white20,
-    opacity: 0.6,
-  },
-  glowBottom: {
-    position: 'absolute',
-    bottom: -15.5,
-    left: 23.5,
-    right: 23.5,
-    height: 32,
-    borderRadius: 200,
-    backgroundColor: Palette.white20,
-    opacity: 0.6,
   },
 });
